@@ -139,7 +139,7 @@ public class FlagManager : MonoBehaviour
             // _destroy.SetActive(false);
             // _toku.SetActive(false);
             _zu.SetActive(false);
-            // _arm.SetActive(false);
+            _arm.SetActive(false);
         }
     }
 
@@ -161,6 +161,6 @@ public class FlagManager : MonoBehaviour
         // _destroy.SetActive(d);
         // _toku.SetActive(t);
         _zu.SetActive(z);
-        // _arm.SetActive(a);
+        _arm.SetActive(a);
     }
 }
