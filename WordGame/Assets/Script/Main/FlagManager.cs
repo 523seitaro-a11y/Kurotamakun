@@ -123,7 +123,7 @@ public class FlagManager : MonoBehaviour
             _mainCharacter.SetActive(true);
 
             // _night.SetActive(night);
-            // _rain.SetActive(rain);
+            _rain.SetActive(rain);
             // _crime.SetActive(crime);
             // _small.SetActive(small);
 
