@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
+//test
+
 public class FlagManager : MonoBehaviour
 {
     [SerializeField, Header("MainCharacter")]
