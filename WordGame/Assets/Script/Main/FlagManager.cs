@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-//test
+//nairo
 
 public class FlagManager : MonoBehaviour
 {
