@@ -1731,6 +1731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b082ba38c7ec0648b9ddb671b694865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nfcReader: {fileID: 0}
   _mainCharacter: {fileID: 1849632859}
   _horror: {fileID: 1976944366}
   _ghost: {fileID: 2022462191}
@@ -5096,6 +5097,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220fcd7e0e34cbf479bb6afeb2298baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCardPresent: 0
+  isH: 0
+  isM: 0
+  isP: 0
 --- !u!4 &1778029230
 Transform:
   m_ObjectHideFlags: 0
@@ -6391,6 +6396,7 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 1778029230}
   - {fileID: 1430695679}
   - {fileID: 519503904}
   - {fileID: 375523514}
@@ -6409,4 +6415,3 @@ SceneRoots:
   - {fileID: 429334551}
   - {fileID: 159440812}
   - {fileID: 1164864522}
-  - {fileID: 1778029230}
