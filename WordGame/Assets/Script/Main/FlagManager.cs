@@ -8,6 +8,8 @@ using System.Collections;
 
 public class FlagManager : MonoBehaviour
 {
+    public NFCReader nfcReader;
+
     [SerializeField, Header("MainCharacter")]
     private GameObject _mainCharacter;
 
@@ -76,11 +78,11 @@ public class FlagManager : MonoBehaviour
     {
         var keyboard = Keyboard.current;
 
-        pause = keyboard.pKey.isPressed;
-        mirror = keyboard.mKey.isPressed;
+        pause = keyboard.pKey.isPressed || nfcReader.isP;
+        mirror = keyboard.mKey.isPressed || nfcReader.isM;
         night = keyboard.nKey.isPressed;
 
-        horror = keyboard.hKey.isPressed;
+        horror = keyboard.hKey.isPressed || nfcReader.isH;
         ko = keyboard.kKey.isPressed;
         ghost = keyboard.gKey.isPressed;
         rocket = keyboard.oKey.isPressed;
