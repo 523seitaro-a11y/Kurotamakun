@@ -4,8 +4,12 @@ using System.Collections;
 
 //nairo
 
+//branch
+
 public class FlagManager : MonoBehaviour
 {
+    public NFCReader nfcReader;
+
     [SerializeField, Header("MainCharacter")]
     private GameObject _mainCharacter;
 
@@ -74,11 +78,11 @@ public class FlagManager : MonoBehaviour
     {
         var keyboard = Keyboard.current;
 
-        pause = keyboard.pKey.isPressed;
-        mirror = keyboard.mKey.isPressed;
+        pause = keyboard.pKey.isPressed || nfcReader.isP;
+        mirror = keyboard.mKey.isPressed || nfcReader.isM;
         night = keyboard.nKey.isPressed;
 
-        horror = keyboard.hKey.isPressed;
+        horror = keyboard.hKey.isPressed || nfcReader.isH;
         ko = keyboard.kKey.isPressed;
         ghost = keyboard.gKey.isPressed;
         rocket = keyboard.oKey.isPressed;
@@ -121,7 +125,7 @@ public class FlagManager : MonoBehaviour
             _mainCharacter.SetActive(true);
 
             // _night.SetActive(night);
-            // _rain.SetActive(rain);
+            _rain.SetActive(rain);
             // _crime.SetActive(crime);
             // _small.SetActive(small);
 
@@ -136,8 +140,8 @@ public class FlagManager : MonoBehaviour
             //_neko.SetActive(false);
             // _destroy.SetActive(false);
             // _toku.SetActive(false);
-            // _zu.SetActive(false);
-            // _arm.SetActive(false);
+            _zu.SetActive(false);
+            _arm.SetActive(false);
         }
     }
 
@@ -158,7 +162,7 @@ public class FlagManager : MonoBehaviour
         //_neko.SetActive(n);
         // _destroy.SetActive(d);
         // _toku.SetActive(t);
-        // _zu.SetActive(z);
-        // _arm.SetActive(a);
+        _zu.SetActive(z);
+        _arm.SetActive(a);
     }
 }
