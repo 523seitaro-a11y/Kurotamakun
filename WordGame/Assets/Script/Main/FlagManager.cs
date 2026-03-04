@@ -117,7 +117,8 @@ public class FlagManager : MonoBehaviour
                 toku,
                 neko,
                 zu,
-                arm
+                arm,
+                ko
             ));
         }
         else
@@ -142,10 +143,11 @@ public class FlagManager : MonoBehaviour
             // _toku.SetActive(false);
             _zu.SetActive(false);
             _arm.SetActive(false);
+            //_ko.SetActive(false);
         }
     }
 
-    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool t,bool n,bool z,bool a)
+    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool t,bool n,bool z,bool a,bool k)
     {
         if (_mainCharacter.activeSelf)
         {
@@ -164,5 +166,6 @@ public class FlagManager : MonoBehaviour
         // _toku.SetActive(t);
         _zu.SetActive(z);
         _arm.SetActive(a);
+        //_ko.SetActive(k);
     }
 }
