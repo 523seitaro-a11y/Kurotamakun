@@ -128,7 +128,7 @@ public class FlagManager : MonoBehaviour
             // _night.SetActive(night);
             _rain.SetActive(rain);
             // _crime.SetActive(crime);
-            // _small.SetActive(small);
+            _small.SetActive(small);
 
             _horror.SetActive(false);
             _ghost.SetActive(false);

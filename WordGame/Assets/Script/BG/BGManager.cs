@@ -84,6 +84,8 @@ public class BGManager : MonoBehaviour
         transform.position = new Vector3(0f, _rocketPosY + _drillPosY + -_wingCount + -_catCount, 0f);
 
         HoleObject();
+
+        
     }
 
     void HoleObject()
