@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BGManager : MonoBehaviour
 {
@@ -30,6 +31,14 @@ public class BGManager : MonoBehaviour
     [SerializeField,Header("穴の速度")]
     private float _speed = 4f;
 
+    // --- 追加：背景オブジェクトの参照 ---
+    [SerializeField, Header("木（Tree）の親オブジェクト")]
+    private GameObject _treeObject;
+
+    [SerializeField, Header("竹（Tikurin）の親オブジェクト")]
+    private GameObject _tikurinObject;
+    // ----------------------------------
+
     private float _timer;
 
     private float _wingCount = 0f;
@@ -46,6 +55,10 @@ public class BGManager : MonoBehaviour
 
     void Update()
     {
+        // --- 追加：Kキーによる背景切り替え ---
+        HandleBackgroundChange();
+        // ----------------------------------
+
         if ((_rocket == null || !_rocket.gameObject.activeInHierarchy) && 
         (_wing == null || !_wing.gameObject.activeInHierarchy) && 
         (_drill == null || !_drill.gameObject.activeInHierarchy) &&
@@ -85,6 +98,24 @@ public class BGManager : MonoBehaviour
 
         HoleObject();
     }
+
+    // --- 追加：切り替えメソッド ---
+    void HandleBackgroundChange()
+    {
+        // Keyboard.current.kKey.isPressed は Kキーが押されている間 true になります
+        bool isKPressed = Keyboard.current.kKey.isPressed;
+
+        if (_treeObject != null)
+        {
+            _treeObject.SetActive(!isKPressed); // Kを押していない時にアクティブ
+        }
+
+        if (_tikurinObject != null)
+        {
+            _tikurinObject.SetActive(isKPressed);  // Kを押している時にアクティブ
+        }
+    }
+    // ----------------------------------
 
     void HoleObject()
     {
