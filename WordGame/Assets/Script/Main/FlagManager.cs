@@ -100,7 +100,7 @@ public class FlagManager : MonoBehaviour
         crime = keyboard.cKey.isPressed;
         small = keyboard.sKey.isPressed;
 
-        inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm ;
+        inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm || small;
 
         if (inputWord)
         {
@@ -118,7 +118,8 @@ public class FlagManager : MonoBehaviour
                 neko,
                 zu,
                 arm,
-                ko
+                ko,
+                small
             ));
         }
         else
@@ -128,8 +129,7 @@ public class FlagManager : MonoBehaviour
             // _night.SetActive(night);
             _rain.SetActive(rain);
             // _crime.SetActive(crime);
-            // _small.SetActive(small);
-
+            
             _horror.SetActive(false);
             _ghost.SetActive(false);
             _bone.SetActive(false);
@@ -144,14 +144,22 @@ public class FlagManager : MonoBehaviour
             _zu.SetActive(false);
             _arm.SetActive(false);
             _ko.SetActive(false);
+            _small.SetActive(small);
         }
     }
 
-    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool t,bool n,bool z,bool a,bool k)
+    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool t,bool n,bool z,bool a,bool k,bool s)
     {
         if (_mainCharacter.activeSelf)
         {
-            yield return StartCoroutine(_mainCharacter.GetComponent<MainCharacter>().RotateDisappear());
+            if (!s)
+            {
+                yield return StartCoroutine(_mainCharacter.GetComponent<MainCharacter>().RotateDisappear());
+            }
+            else
+            {
+                _mainCharacter.SetActive(false);
+            }
         }
         _horror.SetActive(h);
         _ghost.SetActive(g);
@@ -167,5 +175,6 @@ public class FlagManager : MonoBehaviour
         _zu.SetActive(z);
         _arm.SetActive(a);
         _ko.SetActive(k);
+        _small.SetActive(s);
     }
 }
