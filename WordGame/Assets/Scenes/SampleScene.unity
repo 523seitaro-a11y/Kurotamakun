@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &689963
 Transform:
   m_ObjectHideFlags: 0
@@ -692,6 +692,7 @@ MonoBehaviour:
   _rotationDuration: 0.1
   _amplitude: 0.2
   _speed: 1
+  speed: 5
 --- !u!1 &208929767
 GameObject:
   m_ObjectHideFlags: 0
@@ -4245,6 +4246,7 @@ MonoBehaviour:
   _wing: {fileID: 1840265864}
   Speed: 1
   _zu: {fileID: 0}
+  _tiger: {fileID: 0}
 --- !u!114 &1430695681
 MonoBehaviour:
   m_ObjectHideFlags: 0
