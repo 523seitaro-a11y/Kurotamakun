@@ -144,7 +144,7 @@ public class FlagManager : MonoBehaviour
             _zu.SetActive(false);
             _arm.SetActive(false);
             _ko.SetActive(false);
-            _small.SetActive(small);
+            _small.SetActive(false);
         }
     }
 
