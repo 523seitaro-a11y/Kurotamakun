@@ -31,13 +31,16 @@ public class BGManager : MonoBehaviour
     [SerializeField,Header("穴の速度")]
     private float _speed = 4f;
 
-    // --- 追加：背景オブジェクトの参照 ---
     [SerializeField, Header("木（Tree）の親オブジェクト")]
     private GameObject _treeObject;
 
     [SerializeField, Header("竹（Tikurin）の親オブジェクト")]
     private GameObject _tikurinObject;
-    // ----------------------------------
+
+    // --- 追加：月のオブジェクト ---
+    [SerializeField, Header("月（Moon）のオブジェクト")]
+    private GameObject _moonObject;
+    // ----------------------------
 
     private float _timer;
 
@@ -55,8 +58,8 @@ public class BGManager : MonoBehaviour
 
     void Update()
     {
-        // --- 追加：Kキーによる背景切り替え ---
-        HandleBackgroundChange();
+        // --- 追加：Kキーによる背景切り替えとYキーによる月表示 ---
+        HandleBackgroundAndEnvironment();
         // ----------------------------------
 
         if ((_rocket == null || !_rocket.gameObject.activeInHierarchy) && 
@@ -101,9 +104,11 @@ public class BGManager : MonoBehaviour
         
     }
 
-    // --- 追加：切り替えメソッド ---
-    void HandleBackgroundChange()
+    void HandleBackgroundAndEnvironment()
     {
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
         // Keyboard.current.kKey.isPressed は Kキーが押されている間 true になります
         bool isKPressed = Keyboard.current.kKey.isPressed;
 
@@ -116,8 +121,15 @@ public class BGManager : MonoBehaviour
         {
             _tikurinObject.SetActive(isKPressed);  // Kを押している時にアクティブ
         }
+
+        // --- 追加：Yキー：月の表示制御 ---
+        bool isYPressed = keyboard.yKey.isPressed;
+        if (_moonObject != null)
+        {
+            _moonObject.SetActive(isYPressed);
+        }
+
     }
-    // ----------------------------------
 
     void HoleObject()
     {

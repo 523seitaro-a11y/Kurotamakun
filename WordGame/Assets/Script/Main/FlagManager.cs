@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering; // 追加
+using UnityEngine.Rendering.Universal; // 追加
 using System.Collections;
 
 //nairo
@@ -9,6 +11,12 @@ using System.Collections;
 public class FlagManager : MonoBehaviour
 {
     public NFCReader nfcReader;
+
+    // --- 追加分 ---
+    [SerializeField, Header("URPのRendererDataアセット")]
+    private UniversalRendererData _rendererData;
+    private FullScreenPassRendererFeature _nightModeFeature;
+    // --------------
 
     [SerializeField, Header("MainCharacter")]
     private GameObject _mainCharacter;
@@ -74,13 +82,35 @@ public class FlagManager : MonoBehaviour
     public bool crime;//罪
     public bool small;//小
 
+    void Start()
+    {
+        // Renderer Featureの中から名前が "NightModeFeature" のものを探す
+        if (_rendererData != null)
+        {
+            foreach (var feature in _rendererData.rendererFeatures)
+            {
+                //名前が一致するエフェクトを取得
+                if (feature is FullScreenPassRendererFeature && feature.name == "NightModeFeature")
+                {
+                    _nightModeFeature = (FullScreenPassRendererFeature)feature;
+                    break;
+                }
+            }
+        }
+
+        // 開始時はオフにしておく
+        if (_nightModeFeature != null) _nightModeFeature.SetActive(false);
+
+    }
+
+
     void Update()
     {
         var keyboard = Keyboard.current;
 
         pause = keyboard.pKey.isPressed || nfcReader.isP;
         mirror = keyboard.mKey.isPressed || nfcReader.isM;
-        night = keyboard.nKey.isPressed;
+        night = keyboard.yKey.isPressed;
 
         horror = keyboard.hKey.isPressed || nfcReader.isH;
         ko = keyboard.kKey.isPressed;
@@ -99,6 +129,14 @@ public class FlagManager : MonoBehaviour
         arm = keyboard.aKey.isPressed;
         crime = keyboard.cKey.isPressed;
         small = keyboard.sKey.isPressed;
+
+        // --- 夜（色反転）の反映 ---
+        if (_nightModeFeature != null)
+        {
+            // night変数の true/false をそのままシェーダーのON/OFFに適用
+            _nightModeFeature.SetActive(night);
+        }
+        // --------------------------
 
         inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm || small;
 
@@ -126,7 +164,7 @@ public class FlagManager : MonoBehaviour
         {
             _mainCharacter.SetActive(true);
 
-            // _night.SetActive(night);
+            //_night.SetActive(night);
             _rain.SetActive(rain);
             // _crime.SetActive(crime);
             
