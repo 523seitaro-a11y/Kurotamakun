@@ -176,7 +176,7 @@ public class FlagManager : MonoBehaviour
             _fish.SetActive(false);
             _wing.SetActive(false);
             _under.SetActive(false);
-            //_neko.SetActive(false);
+            _neko.SetActive(false);
             // _destroy.SetActive(false);
             // _toku.SetActive(false);
             _zu.SetActive(false);
@@ -207,7 +207,7 @@ public class FlagManager : MonoBehaviour
         _fish.SetActive(f);
         _wing.SetActive(w);
         _under.SetActive(u);
-        //_neko.SetActive(n);
+        _neko.SetActive(n);
         // _destroy.SetActive(d);
         // _toku.SetActive(t);
         _zu.SetActive(z);

@@ -17,7 +17,7 @@ public class BGManager : MonoBehaviour
     [SerializeField,Header("猫")]
     private Transform _cat;
     [SerializeField, Header("猫の移動スピード時間")]
-    private float _catTime = 5.0f;
+    private float _catTime = 3.0f;
 
     [SerializeField, Header("穴")]
     private GameObject _hole;
@@ -90,18 +90,16 @@ public class BGManager : MonoBehaviour
             _wingCount += Time.deltaTime * _wingTime;
             _wingCount = Mathf.Clamp(_wingCount, 0f, 10f);
         }
-        else if (_cat.gameObject.activeInHierarchy)
+        else if (_cat.gameObject.activeInHierarchy && _cat.GetComponent<Cat>().AfterJump)
         {
             _catCount += Time.deltaTime * _catTime;
-            _catCount = Mathf.Clamp(_catCount, 0f, 2f);
+            _catCount = Mathf.Clamp(_catCount, 0f, 4f);
         }
         _rocketPosY = -25 * _rocketCurrentX / 90;
         _drillPosY = 15 * (_drillCurrentZ - 270) / 90;
         transform.position = new Vector3(0f, _rocketPosY + _drillPosY + -_wingCount + -_catCount, 0f);
 
         HoleObject();
-
-        
     }
 
     void HandleBackgroundAndEnvironment()
