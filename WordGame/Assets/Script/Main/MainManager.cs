@@ -17,11 +17,18 @@ public class MainManager : MonoBehaviour
     [SerializeField, Header("図")]
     private GameObject _zu;
 
+    [SerializeField, Header("虎")]
+    private GameObject _tiger;
+
+
     private float _legSpeed = 1.0f;
 
     private float _wingSpeed = 1.0f;
 
     private float _zuSpeed = 1.0f;
+
+    private float _tigerSpeed = 1.0f;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -62,7 +69,17 @@ public class MainManager : MonoBehaviour
             _zuSpeed = 1.0f;
         }
 
-        Speed = _speed * _legSpeed * _wingSpeed * _zuSpeed;
+        Tiger tiger = FindFirstObjectByType<Tiger>();
+        if (tiger != null)
+        {
+            _tigerSpeed = tiger.speed;
+        }
+        else
+        {
+            _tigerSpeed = 1.0f;
+        }
+
+        Speed = _speed * _legSpeed * _wingSpeed * _zuSpeed *_tigerSpeed;
     }
 
     public void OnEscape(InputAction.CallbackContext context)

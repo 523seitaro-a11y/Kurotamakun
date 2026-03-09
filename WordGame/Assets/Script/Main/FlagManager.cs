@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering; // 追加
+using UnityEngine.Rendering.Universal; // 追加
 using System.Collections;
 
 //nairo
@@ -9,6 +11,12 @@ using System.Collections;
 public class FlagManager : MonoBehaviour
 {
     public NFCReader nfcReader;
+
+    // --- 追加分 ---
+    [SerializeField, Header("URPのRendererDataアセット")]
+    private UniversalRendererData _rendererData;
+    private FullScreenPassRendererFeature _nightModeFeature;
+    // --------------
 
     [SerializeField, Header("MainCharacter")]
     private GameObject _mainCharacter;
@@ -74,33 +82,63 @@ public class FlagManager : MonoBehaviour
     public bool crime;//罪
     public bool small;//小
 
+    void Start()
+    {
+        // Renderer Featureの中から名前が "NightModeFeature" のものを探す
+        if (_rendererData != null)
+        {
+            foreach (var feature in _rendererData.rendererFeatures)
+            {
+                //名前が一致するエフェクトを取得
+                if (feature is FullScreenPassRendererFeature && feature.name == "NightModeFeature")
+                {
+                    _nightModeFeature = (FullScreenPassRendererFeature)feature;
+                    break;
+                }
+            }
+        }
+
+        // 開始時はオフにしておく
+        if (_nightModeFeature != null) _nightModeFeature.SetActive(false);
+
+    }
+
+
     void Update()
     {
         var keyboard = Keyboard.current;
 
         pause = keyboard.pKey.isPressed || nfcReader.isP;
         mirror = keyboard.mKey.isPressed || nfcReader.isM;
-        night = keyboard.nKey.isPressed;
+        night = keyboard.yKey.isPressed || nfcReader.isY;
 
         horror = keyboard.hKey.isPressed || nfcReader.isH;
-        ko = keyboard.kKey.isPressed;
-        ghost = keyboard.gKey.isPressed;
-        rocket = keyboard.oKey.isPressed;
-        bone = keyboard.bKey.isPressed;
-        rain = keyboard.rKey.isPressed;
-        leg = keyboard.lKey.isPressed;
-        fish = keyboard.fKey.isPressed;
-        wing = keyboard.wKey.isPressed;
-        under = keyboard.uKey.isPressed;
-        destroy = keyboard.dKey.isPressed;
-        toku = keyboard.tKey.isPressed;
-        neko = keyboard.nKey.isPressed;
-        zu = keyboard.zKey.isPressed;
-        arm = keyboard.aKey.isPressed;
-        crime = keyboard.cKey.isPressed;
-        small = keyboard.sKey.isPressed;
+        ko = keyboard.kKey.isPressed || nfcReader.isK;
+        ghost = keyboard.gKey.isPressed || nfcReader.isG;
+        rocket = keyboard.oKey.isPressed || nfcReader.isO;
+        bone = keyboard.bKey.isPressed || nfcReader.isB;
+        rain = keyboard.rKey.isPressed || nfcReader.isR;
+        leg = keyboard.lKey.isPressed || nfcReader.isL;
+        fish = keyboard.fKey.isPressed || nfcReader.isF;
+        wing = keyboard.wKey.isPressed || nfcReader.isW;
+        under = keyboard.uKey.isPressed || nfcReader.isU;
+        destroy = keyboard.dKey.isPressed || nfcReader.isD;
+        toku = keyboard.tKey.isPressed || nfcReader.isT;
+        neko = keyboard.nKey.isPressed || nfcReader.isN;
+        zu = keyboard.zKey.isPressed || nfcReader.isZ;
+        arm = keyboard.aKey.isPressed || nfcReader.isA;
+        crime = keyboard.cKey.isPressed || nfcReader.isC;
+        small = keyboard.sKey.isPressed || nfcReader.isS;
 
-        inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm ;
+        // --- 夜（色反転）の反映 ---
+        if (_nightModeFeature != null)
+        {
+            // night変数の true/false をそのままシェーダーのON/OFFに適用
+            _nightModeFeature.SetActive(night);
+        }
+        // --------------------------
+
+        inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm || small;
 
         if (inputWord)
         {
@@ -117,18 +155,19 @@ public class FlagManager : MonoBehaviour
                 toku,
                 neko,
                 zu,
-                arm
+                arm,
+                ko,
+                small
             ));
         }
         else
         {
             _mainCharacter.SetActive(true);
 
-            // _night.SetActive(night);
+            //_night.SetActive(night);
             _rain.SetActive(rain);
             // _crime.SetActive(crime);
-            // _small.SetActive(small);
-
+            
             _horror.SetActive(false);
             _ghost.SetActive(false);
             _bone.SetActive(false);
@@ -137,19 +176,28 @@ public class FlagManager : MonoBehaviour
             _fish.SetActive(false);
             _wing.SetActive(false);
             _under.SetActive(false);
-            //_neko.SetActive(false);
+            _neko.SetActive(false);
             // _destroy.SetActive(false);
             // _toku.SetActive(false);
             _zu.SetActive(false);
             _arm.SetActive(false);
+            _ko.SetActive(false);
+            _small.SetActive(false);
         }
     }
 
-    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool t,bool n,bool z,bool a)
+    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool t,bool n,bool z,bool a,bool k,bool s)
     {
         if (_mainCharacter.activeSelf)
         {
-            yield return StartCoroutine(_mainCharacter.GetComponent<MainCharacter>().RotateDisappear());
+            if (!s)
+            {
+                yield return StartCoroutine(_mainCharacter.GetComponent<MainCharacter>().RotateDisappear());
+            }
+            else
+            {
+                _mainCharacter.SetActive(false);
+            }
         }
         _horror.SetActive(h);
         _ghost.SetActive(g);
@@ -159,10 +207,12 @@ public class FlagManager : MonoBehaviour
         _fish.SetActive(f);
         _wing.SetActive(w);
         _under.SetActive(u);
-        //_neko.SetActive(n);
+        _neko.SetActive(n);
         // _destroy.SetActive(d);
         // _toku.SetActive(t);
         _zu.SetActive(z);
         _arm.SetActive(a);
+        _ko.SetActive(k);
+        _small.SetActive(s);
     }
 }

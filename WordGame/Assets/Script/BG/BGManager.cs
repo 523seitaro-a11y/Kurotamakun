@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BGManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class BGManager : MonoBehaviour
     [SerializeField,Header("猫")]
     private Transform _cat;
     [SerializeField, Header("猫の移動スピード時間")]
-    private float _catTime = 5.0f;
+    private float _catTime = 3.0f;
 
     [SerializeField, Header("穴")]
     private GameObject _hole;
@@ -29,6 +30,17 @@ public class BGManager : MonoBehaviour
     private GameObject _hole2;
     [SerializeField,Header("穴の速度")]
     private float _speed = 4f;
+
+    [SerializeField, Header("木（Tree）の親オブジェクト")]
+    private GameObject _treeObject;
+
+    [SerializeField, Header("竹（Tikurin）の親オブジェクト")]
+    private GameObject _tikurinObject;
+
+    // --- 追加：月のオブジェクト ---
+    [SerializeField, Header("月（Moon）のオブジェクト")]
+    private GameObject _moonObject;
+    // ----------------------------
 
     private float _timer;
 
@@ -46,6 +58,10 @@ public class BGManager : MonoBehaviour
 
     void Update()
     {
+        // --- 追加：Kキーによる背景切り替えとYキーによる月表示 ---
+        HandleBackgroundAndEnvironment();
+        // ----------------------------------
+
         if ((_rocket == null || !_rocket.gameObject.activeInHierarchy) && 
         (_wing == null || !_wing.gameObject.activeInHierarchy) && 
         (_drill == null || !_drill.gameObject.activeInHierarchy) &&
@@ -74,16 +90,43 @@ public class BGManager : MonoBehaviour
             _wingCount += Time.deltaTime * _wingTime;
             _wingCount = Mathf.Clamp(_wingCount, 0f, 10f);
         }
-        else if (_cat.gameObject.activeInHierarchy)
+        else if (_cat.gameObject.activeInHierarchy && _cat.GetComponent<Cat>().AfterJump)
         {
             _catCount += Time.deltaTime * _catTime;
-            _catCount = Mathf.Clamp(_catCount, 0f, 2f);
+            _catCount = Mathf.Clamp(_catCount, 0f, 4f);
         }
         _rocketPosY = -25 * _rocketCurrentX / 90;
         _drillPosY = 15 * (_drillCurrentZ - 270) / 90;
         transform.position = new Vector3(0f, _rocketPosY + _drillPosY + -_wingCount + -_catCount, 0f);
 
         HoleObject();
+    }
+
+    void HandleBackgroundAndEnvironment()
+    {
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        // Keyboard.current.kKey.isPressed は Kキーが押されている間 true になります
+        bool isKPressed = Keyboard.current.kKey.isPressed;
+
+        if (_treeObject != null)
+        {
+            _treeObject.SetActive(!isKPressed); // Kを押していない時にアクティブ
+        }
+
+        if (_tikurinObject != null)
+        {
+            _tikurinObject.SetActive(isKPressed);  // Kを押している時にアクティブ
+        }
+
+        // --- 追加：Yキー：月の表示制御 ---
+        bool isYPressed = keyboard.yKey.isPressed;
+        if (_moonObject != null)
+        {
+            _moonObject.SetActive(isYPressed);
+        }
+
     }
 
     void HoleObject()
