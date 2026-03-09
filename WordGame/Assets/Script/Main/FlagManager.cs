@@ -110,25 +110,25 @@ public class FlagManager : MonoBehaviour
 
         pause = keyboard.pKey.isPressed || nfcReader.isP;
         mirror = keyboard.mKey.isPressed || nfcReader.isM;
-        night = keyboard.yKey.isPressed;
+        night = keyboard.yKey.isPressed || nfcReader.isY;
 
         horror = keyboard.hKey.isPressed || nfcReader.isH;
-        ko = keyboard.kKey.isPressed;
-        ghost = keyboard.gKey.isPressed;
-        rocket = keyboard.oKey.isPressed;
-        bone = keyboard.bKey.isPressed;
-        rain = keyboard.rKey.isPressed;
-        leg = keyboard.lKey.isPressed;
-        fish = keyboard.fKey.isPressed;
-        wing = keyboard.wKey.isPressed;
-        under = keyboard.uKey.isPressed;
-        destroy = keyboard.dKey.isPressed;
-        toku = keyboard.tKey.isPressed;
-        neko = keyboard.nKey.isPressed;
-        zu = keyboard.zKey.isPressed;
-        arm = keyboard.aKey.isPressed;
-        crime = keyboard.cKey.isPressed;
-        small = keyboard.sKey.isPressed;
+        ko = keyboard.kKey.isPressed || nfcReader.isK;
+        ghost = keyboard.gKey.isPressed || nfcReader.isG;
+        rocket = keyboard.oKey.isPressed || nfcReader.isO;
+        bone = keyboard.bKey.isPressed || nfcReader.isB;
+        rain = keyboard.rKey.isPressed || nfcReader.isR;
+        leg = keyboard.lKey.isPressed || nfcReader.isL;
+        fish = keyboard.fKey.isPressed || nfcReader.isF;
+        wing = keyboard.wKey.isPressed || nfcReader.isW;
+        under = keyboard.uKey.isPressed || nfcReader.isU;
+        destroy = keyboard.dKey.isPressed || nfcReader.isD;
+        toku = keyboard.tKey.isPressed || nfcReader.isT;
+        neko = keyboard.nKey.isPressed || nfcReader.isN;
+        zu = keyboard.zKey.isPressed || nfcReader.isZ;
+        arm = keyboard.aKey.isPressed || nfcReader.isA;
+        crime = keyboard.cKey.isPressed || nfcReader.isC;
+        small = keyboard.sKey.isPressed || nfcReader.isS;
 
         // --- 夜（色反転）の反映 ---
         if (_nightModeFeature != null)

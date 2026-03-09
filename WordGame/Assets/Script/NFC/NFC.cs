@@ -11,6 +11,23 @@ public class NFCReader : MonoBehaviour
     public bool isH = false;
     public bool isM = false;
     public bool isP = false;
+    public bool isY = false;
+    public bool isK = false;
+    public bool isG = false;
+    public bool isO = false;
+    public bool isS = false;
+    public bool isB = false;
+    public bool isR = false;
+    public bool isL = false;
+    public bool isF = false;
+    public bool isW = false;
+    public bool isU = false;
+    public bool isT = false;
+    public bool isD = false;
+    public bool isN = false;
+    public bool isZ = false;
+    public bool isA = false;
+    public bool isC = false;
 
     private bool previousState = false;
 
@@ -59,6 +76,23 @@ public class NFCReader : MonoBehaviour
                 isH = false;
                 isM = false;
                 isP = false;
+                isY = false;
+                isK = false;
+                isG = false;
+                isO = false;
+                isS = false;
+                isB = false;
+                isR = false;
+                isL = false;
+                isF = false;
+                isW = false;
+                isU = false;
+                isT = false;
+                isD = false;
+                isN = false;
+                isZ = false;
+                isA = false;
+                isC = false;
             }
 
             previousState = isCardPresent;
@@ -118,11 +152,44 @@ public class NFCReader : MonoBehaviour
                     isH = false;
                     isM = false;
                     isP = false;
+                    isY = false;
+                    isK = false;
+                    isG = false;
+                    isO = false;
+                    isS = false;
+                    isB = false;
+                    isR = false;
+                    isL = false;
+                    isF = false;
+                    isW = false;
+                    isU = false;
+                    isT = false;
+                    isD = false;
+                    isN = false;
+                    isZ = false;
+                    isA = false;
+                    isC = false;
 
                     if (text == "h") isH = true;
                     if (text == "m") isM = true;
                     if (text == "p") isP = true;
-
+                    if (text == "y") isY = true;
+                    if (text == "k") isK = true;
+                    if (text == "g") isG = true;
+                    if (text == "o") isO = true;
+                    if (text == "s") isS = true;
+                    if (text == "b") isB = true;
+                    if (text == "r") isR = true;
+                    if (text == "l") isL = true;
+                    if (text == "f") isF = true;
+                    if (text == "w") isW = true;
+                    if (text == "u") isU = true;
+                    if (text == "t") isT = true;
+                    if (text == "d") isD = true;
+                    if (text == "n") isN = true;
+                    if (text == "z") isZ = true;
+                    if (text == "a") isA = true;
+                    if (text == "c") isC = true;
 
                     reader.Disconnect(SCardReaderDisposition.Leave);
                 }
