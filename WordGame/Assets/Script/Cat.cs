@@ -9,9 +9,13 @@ public class Cat : MonoBehaviour
     [SerializeField, Header("移動速度")]
     private float _speed = 2.0f;
 
+    [SerializeField] private GameObject prefab;   // 生成するPrefab
+    [SerializeField] private float interval = 3f; // 生成間隔
+
     public bool AfterJump = false;
 
     private Vector3 _startScale;
+    private Vector3 _startPos;
 
     private Animator _anim;
 
@@ -20,6 +24,7 @@ public class Cat : MonoBehaviour
     void Awake()
     {
         _startScale = transform.localScale;
+        _startPos = transform.localPosition;
         _anim = GetComponent<Animator>();
     }
 
@@ -50,6 +55,8 @@ public class Cat : MonoBehaviour
         {
             _jumpCoroutine = StartCoroutine(Jump());
         }
+
+         StartCoroutine(SpawnLoop());
     }
 
     void OnDisable()
@@ -60,6 +67,10 @@ public class Cat : MonoBehaviour
             _jumpCoroutine = null;
         }
         AfterJump = false;
+
+        StopAllCoroutines();
+
+        transform.localPosition = _startPos;
     }
 
     IEnumerator RotateAppear()
@@ -87,6 +98,14 @@ public class Cat : MonoBehaviour
     {
         yield return new WaitForSeconds(3.5f);
         AfterJump = true;
-        _anim.SetTrigger("Jump");
+    }
+
+    IEnumerator SpawnLoop()
+    {
+        while (true)
+        {
+            Instantiate(prefab,new Vector3(13, 0, 0), Quaternion.identity);
+            yield return new WaitForSeconds(interval);
+        }
     }
 }

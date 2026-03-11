@@ -19,6 +19,11 @@ public class BGManager : MonoBehaviour
     [SerializeField, Header("猫の移動スピード時間")]
     private float _catTime = 3.0f;
 
+    [SerializeField,Header("壊")]
+    private Transform _destroy;
+    [SerializeField, Header("怪獣の移動スピード時間")]
+    private float _destroyTime = 3.0f;
+
     [SerializeField, Header("穴")]
     private GameObject _hole;
     [SerializeField, Header("穴の間隔")]
@@ -48,6 +53,8 @@ public class BGManager : MonoBehaviour
 
     private float _catCount = 0f;
 
+    private float _destroyCount = 0f;
+
     private float _rocketCurrentX;
     private float _rocketPosY;
 
@@ -65,11 +72,13 @@ public class BGManager : MonoBehaviour
         if ((_rocket == null || !_rocket.gameObject.activeInHierarchy) && 
         (_wing == null || !_wing.gameObject.activeInHierarchy) && 
         (_drill == null || !_drill.gameObject.activeInHierarchy) &&
-        (_cat == null || !_cat.gameObject.activeInHierarchy))
+        (_cat == null || !_cat.gameObject.activeInHierarchy) &&
+        (_destroy == null || !_destroy.gameObject.activeInHierarchy))
         {
             _rocketCurrentX = 0f;
             _drillCurrentZ = 270f;
             _wingCount = 0f;
+            _destroyCount = 0f;
             _catCount = 0f;
         }
         else if (_rocket.gameObject.activeInHierarchy)
@@ -90,6 +99,11 @@ public class BGManager : MonoBehaviour
             _wingCount += Time.deltaTime * _wingTime;
             _wingCount = Mathf.Clamp(_wingCount, 0f, 10f);
         }
+        else if (_destroy.gameObject.activeInHierarchy)
+        {
+            _destroyCount += Time.deltaTime * _destroyTime;
+            _destroyCount = Mathf.Clamp(_destroyCount, 0f, 3f);
+        }
         else if (_cat.gameObject.activeInHierarchy && _cat.GetComponent<Cat>().AfterJump)
         {
             _catCount += Time.deltaTime * _catTime;
@@ -97,7 +111,7 @@ public class BGManager : MonoBehaviour
         }
         _rocketPosY = -25 * _rocketCurrentX / 90;
         _drillPosY = 15 * (_drillCurrentZ - 270) / 90;
-        transform.position = new Vector3(0f, _rocketPosY + _drillPosY + -_wingCount + -_catCount, 0f);
+        transform.position = new Vector3(0f, _rocketPosY + _drillPosY + -_wingCount + -_catCount + -_destroyCount , 0f);
 
         HoleObject();
     }

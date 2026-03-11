@@ -138,7 +138,7 @@ public class FlagManager : MonoBehaviour
         }
         // --------------------------
 
-        inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm || small;
+        inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm || small || crime;
 
         if (inputWord)
         {
@@ -152,21 +152,20 @@ public class FlagManager : MonoBehaviour
                 wing,
                 under,
                 destroy,
-                toku,
                 neko,
                 zu,
                 arm,
                 ko,
-                small
+                small,
+                toku,
+                crime
             ));
         }
         else
         {
             _mainCharacter.SetActive(true);
 
-            //_night.SetActive(night);
             _rain.SetActive(rain);
-            // _crime.SetActive(crime);
             
             _horror.SetActive(false);
             _ghost.SetActive(false);
@@ -177,20 +176,21 @@ public class FlagManager : MonoBehaviour
             _wing.SetActive(false);
             _under.SetActive(false);
             _neko.SetActive(false);
-            // _destroy.SetActive(false);
-            // _toku.SetActive(false);
+            _destroy.SetActive(false);
             _zu.SetActive(false);
             _arm.SetActive(false);
             _ko.SetActive(false);
             _small.SetActive(false);
+            _toku.SetActive(false);
+            _crime.SetActive(false);
         }
     }
 
-    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool t,bool n,bool z,bool a,bool k,bool s)
+    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool n,bool z,bool a,bool k,bool s,bool t,bool c)
     {
         if (_mainCharacter.activeSelf)
         {
-            if (!s)
+            if (!s && !t && !c)
             {
                 yield return StartCoroutine(_mainCharacter.GetComponent<MainCharacter>().RotateDisappear());
             }
@@ -208,11 +208,12 @@ public class FlagManager : MonoBehaviour
         _wing.SetActive(w);
         _under.SetActive(u);
         _neko.SetActive(n);
-        // _destroy.SetActive(d);
-        // _toku.SetActive(t);
+        _destroy.SetActive(d);
         _zu.SetActive(z);
         _arm.SetActive(a);
         _ko.SetActive(k);
         _small.SetActive(s);
+        _toku.SetActive(t);
+        _crime.SetActive(c);
     }
 }
