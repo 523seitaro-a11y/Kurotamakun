@@ -2069,6 +2069,8 @@ MonoBehaviour:
   _treeObject: {fileID: 1481510626}
   _tikurinObject: {fileID: 689962}
   _sugiObject: {fileID: 125228652}
+  _balloonPrefab: {fileID: 992708801176672743, guid: 31866112cd3dcd249ac1c3ff2b26dd45, type: 3}
+  _balloonInterval: 3
   _moonObject: {fileID: 1931156115}
 --- !u!1 &377154716
 GameObject:

@@ -45,6 +45,12 @@ public class BGManager : MonoBehaviour
     [SerializeField, Header("杉（Sugi）の親オブジェクト")]
     private GameObject _sugiObject;
 
+    [SerializeField, Header("風船のプレハブ")]
+    private GameObject _balloonPrefab;
+    [SerializeField, Header("風船を出す間隔")]
+    private float _balloonInterval = 1f;
+    private float _balloonTimer;
+
     // --- 追加：月のオブジェクト ---
     [SerializeField, Header("月（Moon）のオブジェクト")]
     private GameObject _moonObject;
@@ -157,7 +163,31 @@ public class BGManager : MonoBehaviour
         {
             _moonObject.SetActive(isYPressed);
         }
+        // --- 風船の処理（修正版） ---
+        if (keyboard.wKey.isPressed && _balloonPrefab != null)
+        {
+            _balloonTimer += Time.deltaTime;
 
+            if (_balloonTimer >= _balloonInterval)
+            {
+                SpawnBalloon();
+                _balloonTimer = 0f; // ★1. ここで0リセット（これが重要！）
+            }
+        }
+
+        // ★2. Wキーを離した瞬間にタイマーをリセット（次に押した時すぐ出すため）
+        if (keyboard.wKey.wasReleasedThisFrame)
+        {
+            _balloonTimer = _balloonInterval;
+        }
+
+
+    }
+    void SpawnBalloon()
+    {
+        float randomX = Random.Range(-8f, 8f);
+        Vector3 spawnPos = new Vector3(randomX, -6f, 0f);
+        Instantiate(_balloonPrefab, spawnPos, Quaternion.identity);
     }
 
     void HoleObject()
