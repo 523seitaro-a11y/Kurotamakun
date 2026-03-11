@@ -138,7 +138,7 @@ public class FlagManager : MonoBehaviour
         }
         // --------------------------
 
-        inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm || small;
+        inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm || small || crime;
 
         if (inputWord)
         {
@@ -152,12 +152,13 @@ public class FlagManager : MonoBehaviour
                 wing,
                 under,
                 destroy,
-                toku,
                 neko,
                 zu,
                 arm,
                 ko,
-                small
+                small,
+                toku,
+                crime
             ));
         }
         else
@@ -165,8 +166,6 @@ public class FlagManager : MonoBehaviour
             _mainCharacter.SetActive(true);
 
             _rain.SetActive(rain);
-            // _crime.SetActive(crime);
-            // _toku.SetActive(toku);
             
             _horror.SetActive(false);
             _ghost.SetActive(false);
@@ -182,14 +181,16 @@ public class FlagManager : MonoBehaviour
             _arm.SetActive(false);
             _ko.SetActive(false);
             _small.SetActive(false);
+            _toku.SetActive(false);
+            _crime.SetActive(false);
         }
     }
 
-    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool t,bool n,bool z,bool a,bool k,bool s)
+    IEnumerator InputSequence(bool h,bool g,bool b,bool o,bool l,bool f,bool w,bool u,bool d,bool n,bool z,bool a,bool k,bool s,bool t,bool c)
     {
         if (_mainCharacter.activeSelf)
         {
-            if (!s)
+            if (!s && !t && !c)
             {
                 yield return StartCoroutine(_mainCharacter.GetComponent<MainCharacter>().RotateDisappear());
             }
@@ -212,5 +213,7 @@ public class FlagManager : MonoBehaviour
         _arm.SetActive(a);
         _ko.SetActive(k);
         _small.SetActive(s);
+        _toku.SetActive(t);
+        _crime.SetActive(c);
     }
 }
