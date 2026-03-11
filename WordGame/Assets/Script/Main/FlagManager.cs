@@ -164,9 +164,9 @@ public class FlagManager : MonoBehaviour
         {
             _mainCharacter.SetActive(true);
 
-            //_night.SetActive(night);
             _rain.SetActive(rain);
             // _crime.SetActive(crime);
+            // _toku.SetActive(toku);
             
             _horror.SetActive(false);
             _ghost.SetActive(false);
@@ -177,8 +177,7 @@ public class FlagManager : MonoBehaviour
             _wing.SetActive(false);
             _under.SetActive(false);
             _neko.SetActive(false);
-            // _destroy.SetActive(false);
-            // _toku.SetActive(false);
+            _destroy.SetActive(false);
             _zu.SetActive(false);
             _arm.SetActive(false);
             _ko.SetActive(false);
@@ -208,8 +207,7 @@ public class FlagManager : MonoBehaviour
         _wing.SetActive(w);
         _under.SetActive(u);
         _neko.SetActive(n);
-        // _destroy.SetActive(d);
-        // _toku.SetActive(t);
+        _destroy.SetActive(d);
         _zu.SetActive(z);
         _arm.SetActive(a);
         _ko.SetActive(k);
