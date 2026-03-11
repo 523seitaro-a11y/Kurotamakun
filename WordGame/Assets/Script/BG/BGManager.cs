@@ -42,6 +42,9 @@ public class BGManager : MonoBehaviour
     [SerializeField, Header("竹（Tikurin）の親オブジェクト")]
     private GameObject _tikurinObject;
 
+    [SerializeField, Header("杉（Sugi）の親オブジェクト")]
+    private GameObject _sugiObject;
+
     // --- 追加：月のオブジェクト ---
     [SerializeField, Header("月（Moon）のオブジェクト")]
     private GameObject _moonObject;
@@ -124,6 +127,7 @@ public class BGManager : MonoBehaviour
         // Keyboard.current.kKey.isPressed は Kキーが押されている間 true になります
         bool isKPressed = Keyboard.current.kKey.isPressed;
 
+
         if (_treeObject != null)
         {
             _treeObject.SetActive(!isKPressed); // Kを押していない時にアクティブ
@@ -132,6 +136,19 @@ public class BGManager : MonoBehaviour
         if (_tikurinObject != null)
         {
             _tikurinObject.SetActive(isKPressed);  // Kを押している時にアクティブ
+        }
+
+        // --- 追加：Gキー：杉の表示制御 ---
+        bool isGPressed = Keyboard.current.gKey.isPressed;
+        if (_treeObject != null)
+        {
+            _treeObject.SetActive(!isGPressed); // Gを押していない時にアクティブ
+        }
+
+        if (_sugiObject != null)
+        {
+            // Gが押されている時に「杉」を表示
+            _sugiObject.SetActive(isGPressed);
         }
 
         // --- 追加：Yキー：月の表示制御 ---
