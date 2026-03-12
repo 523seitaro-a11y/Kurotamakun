@@ -4,18 +4,14 @@ using System.Collections.Generic;
 
 public class Toku : MonoBehaviour
 {
-    //Float用の変数(Float用のコードは上下するアニメーションが不要な場合削除してもOK)
-    [SerializeField, Header("上下の幅")]
-    private float _amplitude = 0.2f;
-    [SerializeField, Header("揺れる速さ")]
-    private float _speed = 1.0f;
-    private Vector3 _startPos;
-
     [SerializeField, Header("進行速度")]
     public float TokuMoveSpeed = 1.0f;
 
     [SerializeField, Header("イベント発生間隔")]
     private float _interval = 5f;
+
+    [SerializeField, Header("くろたまくん")]
+    private GameObject _kurotama;
 
     [SerializeField, Header("婆")]
     private GameObject _baa;
@@ -26,18 +22,21 @@ public class Toku : MonoBehaviour
     [SerializeField, Header("女の子")]
     private GameObject _girl;
 
+    public int TokuCount = 0;
+
     private List<int> _events;
     private int _currentIndex;
     private float _timer;
 
     void Awake()//Activeになった瞬間に一度だけ開始される処理
     {
-        _startPos = transform.position;//Float用
+
     }
 
     void OnEnable()//Activeになる度に開始される処理
     {
         ResetEvents();
+        TokuCount = 0;
 
         _baa.SetActive(false);
         _akunin.SetActive(false);
@@ -48,8 +47,6 @@ public class Toku : MonoBehaviour
 
 void Update()//Activeになっている間に繰り返される処理
     {
-        Float();//上下するアニメーション
-
         if (_events == null || _currentIndex >= _events.Count)
         {
             return;
@@ -61,6 +58,7 @@ void Update()//Activeになっている間に繰り返される処理
         {
             _timer = 0f;
             NextEvent();
+            TokuCount += 1;
         }
 
         if (_baa.activeSelf)
@@ -85,7 +83,7 @@ void Update()//Activeになっている間に繰り返される処理
 
     void ResetEvents()
     {
-        _events = new List<int>() { 0, 1, 2, 3 };
+        _events = new List<int>() { 0, 1, 2, 3, 4};
         _currentIndex = 0;
         _timer = 0f;
 
@@ -129,7 +127,7 @@ void Update()//Activeになっている間に繰り返される処理
         Debug.Log("イベントA");
 
         _baa.SetActive(true);
-        WaitForSeconds wait = new WaitForSeconds(6f);
+        WaitForSeconds wait = new WaitForSeconds(5.6f);
         yield return wait;
         _baa.SetActive(false);
     }
@@ -139,7 +137,7 @@ void Update()//Activeになっている間に繰り返される処理
         Debug.Log("イベントB");
 
         _akunin.SetActive(true);
-        WaitForSeconds wait = new WaitForSeconds(5f);
+        WaitForSeconds wait = new WaitForSeconds(4.5f);
         yield return wait;
         _akunin.SetActive(false);
     }
@@ -149,9 +147,11 @@ void Update()//Activeになっている間に繰り返される処理
         Debug.Log("イベントC");
 
         _girl.SetActive(true);
-        WaitForSeconds wait = new WaitForSeconds(5f);
+        _kurotama.SetActive(false);
+        WaitForSeconds wait = new WaitForSeconds(4.6f);
         yield return wait;
         _girl.SetActive(false);
+        _kurotama.SetActive(true);
     }
 
     IEnumerator EventD()
@@ -169,11 +169,5 @@ void Update()//Activeになっている間に繰り返される処理
             list[i] = list[rand];
             list[rand] = temp;
         }
-    }
-
-    void Float()//上下するアニメーション
-    {
-        float y = Mathf.Sin(Time.time * _speed) * _amplitude;
-        transform.position = _startPos + new Vector3(0, y, 0);
     }
 }

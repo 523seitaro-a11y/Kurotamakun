@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 52a3dd760bbec3b42bd3b2948f1d1971
+guid: 94faa5a74e846504c8ec93849bfbafa2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: huusenn_0
+      name: toku_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 4
-        width: 170
-        height: 411
+        x: 0
+        y: 0
+        width: 3000
+        height: 3000
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb900d7c768cc91458ded333037b5d19
-      internalID: -2023168387
+      spriteID: e85714be6f5255b4aa94066b42daac39
+      internalID: -1552035514
       vertices: []
       indices: 
       edges: []
@@ -122,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ee8cddecc43d86c4299ed5361af2d4ac
+    spriteID: 7011aaea05c0b0a4e8a698864b0cbe4b
     internalID: 0
     vertices: []
     indices: 
@@ -132,9 +132,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":3000.0,"y":3000.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      huusenn_0: -2023168387
+      toku_0: -1552035514
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
