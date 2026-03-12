@@ -22,6 +22,9 @@ public class Toku : MonoBehaviour
     [SerializeField, Header("女の子")]
     private GameObject _girl;
 
+    [SerializeField, Header("車")]
+    private GameObject _car;
+
     public int TokuCount = 0;
 
     private List<int> _events;
@@ -58,7 +61,6 @@ void Update()//Activeになっている間に繰り返される処理
         {
             _timer = 0f;
             NextEvent();
-            TokuCount += 1;
         }
 
         if (_baa.activeSelf)
@@ -83,7 +85,7 @@ void Update()//Activeになっている間に繰り返される処理
 
     void ResetEvents()
     {
-        _events = new List<int>() { 0, 1, 2, 3, 4};
+        _events = new List<int>() { 0, 1, 2, 3};
         _currentIndex = 0;
         _timer = 0f;
 
@@ -130,6 +132,8 @@ void Update()//Activeになっている間に繰り返される処理
         WaitForSeconds wait = new WaitForSeconds(5.6f);
         yield return wait;
         _baa.SetActive(false);
+
+        TokuCount++;
     }
 
     IEnumerator EventB()
@@ -137,9 +141,11 @@ void Update()//Activeになっている間に繰り返される処理
         Debug.Log("イベントB");
 
         _akunin.SetActive(true);
-        WaitForSeconds wait = new WaitForSeconds(4.5f);
+        WaitForSeconds wait = new WaitForSeconds(4.6f);
         yield return wait;
         _akunin.SetActive(false);
+
+        TokuCount++;
     }
 
     IEnumerator EventC()
@@ -152,12 +158,19 @@ void Update()//Activeになっている間に繰り返される処理
         yield return wait;
         _girl.SetActive(false);
         _kurotama.SetActive(true);
+
+        TokuCount++;
     }
 
     IEnumerator EventD()
     {
         Debug.Log("イベントD");
-        yield return null;
+
+        _car.SetActive(true);
+        yield return new WaitForSeconds(4.6f);
+        _car.SetActive(false);
+
+        TokuCount++;
     }
 
     void Shuffle(List<int> list)
