@@ -104,7 +104,7 @@ public class Cat : MonoBehaviour
     {
         while (true)
         {
-            Instantiate(prefab,new Vector3(13, 0, 0), Quaternion.identity);
+            Instantiate(prefab,new Vector3(13, 0, 1), Quaternion.identity);
             yield return new WaitForSeconds(interval);
         }
     }

@@ -1,22 +1,31 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Tsumi : MonoBehaviour
 {
-    //Float用の変数(Float用のコードは上下するアニメーションが不要な場合削除してもOK)
-    [SerializeField, Header("上下の幅")]
-    private float _amplitude = 0.2f;
-    [SerializeField, Header("揺れる速さ")]
-    private float _speed = 1.0f;
-    private Vector3 _startPos;
-
     [SerializeField, Header("進行速度")]
     public float TsumiMoveSpeed = 1.0f;
 
     [SerializeField, Header("イベント発生間隔")]
     private float _interval = 5f;
 
+    [SerializeField, Header("くろたまくん")]
+    private GameObject _kurotama;
 
+    [SerializeField, Header("婆")]
+    private GameObject _baa;
+
+    // [SerializeField, Header("悪人")]
+    // private GameObject _akunin;
+
+    [SerializeField, Header("女の子")]
+    private GameObject _girl;
+
+    // [SerializeField, Header("車")]
+    // private GameObject _car;
+
+    public int TsumiCount = 0;
 
     private List<int> _events;
     private int _currentIndex;
@@ -24,14 +33,26 @@ public class Tsumi : MonoBehaviour
 
     void Awake()//Activeになった瞬間に一度だけ開始される処理
     {
-        _startPos = transform.position;//Float用
+
     }
 
-    void Update()//Activeになっている間に繰り返される処理
+    void OnEnable()//Activeになる度に開始される処理
     {
-        Float();//上下するアニメーション
+        _kurotama.SetActive(true);
 
-        if (_currentIndex >= _events.Count)
+        ResetEvents();
+        TsumiCount = 0;
+
+        _baa.SetActive(false);
+        // _akunin.SetActive(false);
+        _girl.SetActive(false);
+        NextEvent();
+        _timer = 0f;
+    }
+
+void Update()//Activeになっている間に繰り返される処理
+    {
+        if (_events == null || _currentIndex >= _events.Count)
         {
             return;
         }
@@ -43,21 +64,30 @@ public class Tsumi : MonoBehaviour
             _timer = 0f;
             NextEvent();
         }
-    }
 
-    void OnEnable()//Activeになる度に開始される処理
-    {
-        ResetEvents();
+        if (_baa.activeSelf)
+        {
+            TsumiMoveSpeed = _baa.GetComponent<AnimationAction>().Speed;
+        }
+        else if (_girl.activeSelf)
+        {
+            TsumiMoveSpeed = _girl.GetComponent<AnimationAction>().Speed;
+        }
+        else
+        {
+            TsumiMoveSpeed = 1f;
+        }
     }
 
     void OnDisable()//非Activeになった瞬間に開始される処理（コルーチンの停止用）
     {
-        
+        StopAllCoroutines();
+        TsumiMoveSpeed = 1f;
     }
 
     void ResetEvents()
     {
-        _events = new List<int>() { 0, 1, 2, 3 };
+        _events = new List<int>() { 0, 1, 2, 3};
         _currentIndex = 0;
         _timer = 0f;
 
@@ -79,43 +109,70 @@ public class Tsumi : MonoBehaviour
         switch (eventID)
         {
             case 0:
-                EventA();
+                StartCoroutine(EventA());
                 break;
 
             case 1:
-                EventB();
+                StartCoroutine(EventB());
                 break;
 
             case 2:
-                EventC();
+                StartCoroutine(EventC());
                 break;
 
             case 3:
-                EventD();
+                StartCoroutine(EventD());
                 break;
         }
     }
 
-    void EventA()
+    IEnumerator EventA()
     {
         Debug.Log("イベントA");
 
-        
+        _baa.SetActive(true);
+        WaitForSeconds wait = new WaitForSeconds(5.6f);
+        yield return wait;
+        _baa.SetActive(false);
+
+        TsumiCount++;
     }
 
-    void EventB()
+    IEnumerator EventB()
     {
         Debug.Log("イベントB");
+
+        //_akunin.SetActive(true);
+        WaitForSeconds wait = new WaitForSeconds(4.6f);
+        yield return wait;
+        // _akunin.SetActive(false);
+
+        TsumiCount++;
     }
 
-    void EventC()
+    IEnumerator EventC()
     {
         Debug.Log("イベントC");
+
+        _girl.SetActive(true);
+        _kurotama.SetActive(false);
+        WaitForSeconds wait = new WaitForSeconds(4.6f);
+        yield return wait;
+        _girl.SetActive(false);
+        _kurotama.SetActive(true);
+
+        TsumiCount++;
     }
 
-    void EventD()
+    IEnumerator EventD()
     {
         Debug.Log("イベントD");
+
+        //_car.SetActive(true);
+        yield return new WaitForSeconds(4.6f);
+        //_car.SetActive(false);
+
+        TsumiCount++;
     }
 
     void Shuffle(List<int> list)
@@ -127,11 +184,5 @@ public class Tsumi : MonoBehaviour
             list[i] = list[rand];
             list[rand] = temp;
         }
-    }
-
-    void Float()//上下するアニメーション
-    {
-        float y = Mathf.Sin(Time.time * _speed) * _amplitude;
-        transform.position = _startPos + new Vector3(0, y, 0);
     }
 }

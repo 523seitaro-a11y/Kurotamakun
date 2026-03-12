@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Float : MonoBehaviour
+public class TokuFloat : MonoBehaviour
 {
     [SerializeField, Header("上下の幅")]
     private float _amplitude = 0.2f;

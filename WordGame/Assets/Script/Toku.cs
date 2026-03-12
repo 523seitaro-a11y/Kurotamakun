@@ -38,13 +38,18 @@ public class Toku : MonoBehaviour
 
     void OnEnable()//Activeになる度に開始される処理
     {
+        _kurotama.SetActive(true);
+
         ResetEvents();
+
         TokuCount = 0;
 
         _baa.SetActive(false);
         _akunin.SetActive(false);
         _girl.SetActive(false);
+
         NextEvent();
+
         _timer = 0f;
     }
 
@@ -63,13 +68,17 @@ void Update()//Activeになっている間に繰り返される処理
             NextEvent();
         }
 
-        if (_baa.activeSelf)
+        if (_baa.activeSelf)//要改善
         {
             TokuMoveSpeed = _baa.GetComponent<Baa>().Speed;
         }
         else if (_akunin.activeSelf)
         {
             TokuMoveSpeed = _akunin.GetComponent<Akunin>().Speed;
+        }
+        else if (_car.activeSelf)
+        {
+            TokuMoveSpeed = _car.GetComponent<AnimationAction>().Speed;
         }
         else
         {
@@ -129,7 +138,7 @@ void Update()//Activeになっている間に繰り返される処理
         Debug.Log("イベントA");
 
         _baa.SetActive(true);
-        WaitForSeconds wait = new WaitForSeconds(5.6f);
+        WaitForSeconds wait = new WaitForSeconds(6.0f);
         yield return wait;
         _baa.SetActive(false);
 
@@ -154,7 +163,7 @@ void Update()//Activeになっている間に繰り返される処理
 
         _girl.SetActive(true);
         _kurotama.SetActive(false);
-        WaitForSeconds wait = new WaitForSeconds(4.6f);
+        WaitForSeconds wait = new WaitForSeconds(6f);
         yield return wait;
         _girl.SetActive(false);
         _kurotama.SetActive(true);
@@ -167,8 +176,10 @@ void Update()//Activeになっている間に繰り返される処理
         Debug.Log("イベントD");
 
         _car.SetActive(true);
-        yield return new WaitForSeconds(4.6f);
+         _kurotama.SetActive(false);
+        yield return new WaitForSeconds(8f);
         _car.SetActive(false);
+        _kurotama.SetActive(true);
 
         TokuCount++;
     }
