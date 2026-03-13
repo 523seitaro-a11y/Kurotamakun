@@ -16,6 +16,10 @@ public class Fish : MonoBehaviour
     private float _speed = 1.0f;
     private Vector3 _startPos;
 
+    [SerializeField] private GameObject child; // 子オブジェクト
+    [SerializeField] private float interval = 5f; // 何秒ごとに
+    [SerializeField] private float activeTime = 6f; // 何秒間アクティブ
+
 
     void Awake()//Activeになった瞬間に一度だけ開始される処理
     {
@@ -33,12 +37,12 @@ public class Fish : MonoBehaviour
     void OnEnable()//Activeになる度に開始される処理
     {
         StartCoroutine(RotateAppear());
-
+        StartCoroutine(ActiveRoutine());
     }
 
     void OnDisable()//非Activeになった瞬間に開始される処理（コルーチンの停止用）
     {
-        
+        StopAllCoroutines();
     }
 
 
@@ -59,6 +63,20 @@ public class Fish : MonoBehaviour
             transform.localScale = new Vector3(xScale, startScale.y, startScale.z);
 
             yield return null;
+        }
+    }
+
+    IEnumerator ActiveRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(interval);
+
+            child.SetActive(true);
+
+            yield return new WaitForSeconds(activeTime);
+
+            child.SetActive(false);
         }
     }
 
