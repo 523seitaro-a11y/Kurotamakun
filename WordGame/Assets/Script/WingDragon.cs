@@ -12,6 +12,9 @@ public class WingDragon : MonoBehaviour
     public float flySpeed = 5.0f;
     public float resetX = -15.0f;
 
+    [Header("出現Z座標")]
+    public float spawnZ = 0f;
+
     [Header("うねり設定")]
     public float waveFrequency = 2.0f;
     public float waveMagnitude = 1.0f;
@@ -26,7 +29,6 @@ public class WingDragon : MonoBehaviour
     private Quaternion initialRotation;
     private float timer;
 
-    // 龍の見た目（FBX）をON/OFFするために、子オブジェクトの参照を持つ
     private GameObject modelChild;
 
     void Awake()
@@ -34,7 +36,6 @@ public class WingDragon : MonoBehaviour
         initialPosition = transform.position;
         initialRotation = transform.rotation;
 
-        // 子オブジェクト（FBXモデル）を取得
         if (transform.childCount > 0)
             modelChild = transform.GetChild(0).gameObject;
     }
@@ -62,14 +63,12 @@ public class WingDragon : MonoBehaviour
                 break;
         }
 
-        // 左端到達チェック
         if (currentState != State.Waiting && transform.position.x < resetX)
         {
             ResetToWaiting();
         }
     }
 
-    // 出現待機中の処理
     void UpdateWaiting()
     {
         timer += Time.deltaTime;
@@ -77,7 +76,7 @@ public class WingDragon : MonoBehaviour
         if (timer >= checkInterval)
         {
             timer = 0f;
-            // 確率判定
+
             if (Random.value <= spawnProbability)
             {
                 StartFlying();
@@ -88,20 +87,25 @@ public class WingDragon : MonoBehaviour
     void StartFlying()
     {
         currentState = State.Appearing;
+
+        // 出現Z座標を設定
+        Vector3 pos = transform.position;
+        pos.z = spawnZ;
+        transform.position = pos;
+
         if (modelChild != null) modelChild.SetActive(true);
     }
 
     void ResetToWaiting()
     {
-        transform.position = initialPosition;
+        transform.position = new Vector3(initialPosition.x, initialPosition.y, spawnZ);
         transform.rotation = initialRotation;
         currentState = State.Waiting;
         timer = 0f;
-        // 待機中は龍の姿だけを隠す
+
         if (modelChild != null) modelChild.SetActive(false);
     }
 
-    // --- 以下、移動処理（変更なし） ---
     void MoveUp()
     {
         transform.Translate(Vector3.up * appearSpeed * Time.deltaTime, Space.World);
@@ -114,7 +118,9 @@ public class WingDragon : MonoBehaviour
         float targetZ = 90f;
         float nextZ = Mathf.MoveTowardsAngle(currentZ, targetZ, turnSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, nextZ);
-        if (Mathf.Abs(Mathf.DeltaAngle(nextZ, targetZ)) < 0.5f) currentState = State.Flying;
+
+        if (Mathf.Abs(Mathf.DeltaAngle(nextZ, targetZ)) < 0.5f)
+            currentState = State.Flying;
     }
 
     void FlyLeftWithWave()
@@ -122,6 +128,7 @@ public class WingDragon : MonoBehaviour
         Vector3 move = Vector3.left * flySpeed * Time.deltaTime;
         float wave = Mathf.Sin(Time.time * waveFrequency) * waveMagnitude;
         move.y = wave * Time.deltaTime;
+
         transform.Translate(move, Space.World);
         transform.rotation = Quaternion.Euler(0, 0, 90f + (wave * 5.0f));
     }

@@ -8,7 +8,11 @@ public class Destroy : MonoBehaviour
     private float _rotationDuration = 0.1f;
     private Vector3 _startScale;
 
-    [SerializeField, Header("BG")] private Transform target;
+    [SerializeField, Header("BG")]
+    private Transform target;
+
+    [SerializeField, Header("木")] 
+    private GameObject _tree;
 
     void Awake()//Activeになった瞬間に一度だけ開始される処理
     {
@@ -25,11 +29,12 @@ public class Destroy : MonoBehaviour
     void OnEnable()//Activeになる度に開始される処理
     {
         StartCoroutine(RotateAppear());
+        _tree.SetActive(false);
     }
 
     void OnDisable()//非Activeになった瞬間に開始される処理（コルーチンの停止用）
     {
-        
+        _tree.SetActive(true);
     }
 
 

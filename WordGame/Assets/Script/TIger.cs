@@ -3,48 +3,54 @@ using System.Collections;
 
 public class Tiger : MonoBehaviour
 {
-    //‰ñ“]ƒAƒjƒ[ƒVƒ‡ƒ“—p‚Ì•Ï”
-    [SerializeField, Header("‰ñ“]ŠÔ")]
+    //ï¿½ï¿½]ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Ì•Ïï¿½
+    [SerializeField, Header("ï¿½ï¿½]ï¿½ï¿½ï¿½ï¿½")]
     private float _rotationDuration = 0.1f;
     private Vector3 _startScale;
 
-    //Float—p‚Ì•Ï”(Float—p‚ÌƒR[ƒh‚Íã‰º‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ª•s—v‚Èê‡íœ‚µ‚Ä‚àOK)
-    [SerializeField, Header("ã‰º‚Ì•")]
+    //Floatï¿½pï¿½Ì•Ïï¿½(Floatï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½Íã‰ºï¿½ï¿½ï¿½ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½vï¿½Èê‡ï¿½íœï¿½ï¿½ï¿½Ä‚ï¿½OK)
+    [SerializeField, Header("ï¿½ã‰ºï¿½Ì•ï¿½")]
     private float _amplitude = 0.2f;
-    [SerializeField, Header("—h‚ê‚é‘¬‚³")]
+    [SerializeField, Header("ï¿½hï¿½ï¿½é‘¬ï¿½ï¿½")]
     private float _speed = 1.0f;
     private Vector3 _startPos;
 
-    //‘¬“x
-    [SerializeField, Header("‘¬“x")]
+    //ï¿½ï¿½ï¿½x
+    [SerializeField, Header("ï¿½ï¿½ï¿½x")]
     public float speed = 5.0f;
 
-    void Awake()//Active‚É‚È‚Á‚½uŠÔ‚Éˆê“x‚¾‚¯ŠJn‚³‚ê‚éˆ—
+    [SerializeField, Header("æœ¨")] 
+    private GameObject _tree;
+    [SerializeField, Header("ç«¹")] 
+    private GameObject _bamboo;
+
+    void Awake()//Activeï¿½É‚È‚ï¿½ï¿½ï¿½ï¿½uï¿½Ô‚Éˆï¿½xï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½ï¿½éˆï¿½ï¿½
     {
         _startScale = transform.localScale;
-        _startPos = transform.position;//Float—p
+        _startPos = transform.position;//Floatï¿½p
 
     }
 
-    void Update()//Active‚É‚È‚Á‚Ä‚¢‚éŠÔ‚ÉŒJ‚è•Ô‚³‚ê‚éˆ—
+    void Update()//Activeï¿½É‚È‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ô‚ÉŒJï¿½ï¿½Ô‚ï¿½ï¿½ï¿½éˆï¿½ï¿½
     {
-        Float();//ã‰º‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“
-
+        Float();//ï¿½ã‰ºï¿½ï¿½ï¿½ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
     }
 
-    void OnEnable()//Active‚É‚È‚é“x‚ÉŠJn‚³‚ê‚éˆ—
+    void OnEnable()//Activeï¿½É‚È‚ï¿½xï¿½ÉŠJï¿½nï¿½ï¿½ï¿½ï¿½éˆï¿½ï¿½
     {
         StartCoroutine(RotateAppear());
-
+        _tree.SetActive(false);
+        _bamboo.SetActive(true);
     }
 
-    void OnDisable()//”ñActive‚É‚È‚Á‚½uŠÔ‚ÉŠJn‚³‚ê‚éˆ—iƒRƒ‹[ƒ`ƒ“‚Ì’â~—pj
+    void OnDisable()//ï¿½ï¿½Activeï¿½É‚È‚ï¿½ï¿½ï¿½ï¿½uï¿½Ô‚ÉŠJï¿½nï¿½ï¿½ï¿½ï¿½éˆï¿½ï¿½ï¿½iï¿½Rï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½ï¿½Ì’ï¿½~ï¿½pï¿½j
     {
-
+        _tree.SetActive(true);
+        _bamboo.SetActive(false);
     }
 
 
-    IEnumerator RotateAppear()//‰ñ“]ƒAƒjƒ[ƒVƒ‡ƒ“
+    IEnumerator RotateAppear()//ï¿½ï¿½]ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
     {
         float elapsed = 0f;
 
@@ -64,7 +70,7 @@ public class Tiger : MonoBehaviour
         }
     }
    
-    void Float()//ã‰º‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“
+    void Float()//ï¿½ã‰ºï¿½ï¿½ï¿½ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
     {
         float y = Mathf.Sin(Time.time * _speed) * _amplitude;
         transform.position = _startPos + new Vector3(0, y, 0);

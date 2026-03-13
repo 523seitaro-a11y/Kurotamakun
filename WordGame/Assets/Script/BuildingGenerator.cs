@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class GhostHakaGenerator : MonoBehaviour
+public class BuildingGenerator : MonoBehaviour
 {
-    [SerializeField, Header("墓のプレハブ")]
-    private GameObject _hakaPrefab;
+    [SerializeField, Header("建物のプレハブ")]
+    private GameObject _buildingPrefab;
 
     [Header("出現間隔の設定")]
     [SerializeField, Header("最低限空ける間隔（秒）")]
@@ -25,7 +25,7 @@ public class GhostHakaGenerator : MonoBehaviour
 
     void OnEnable()
     {
-        // 切り替え時に古い墓が残らないよう全削除
+        // 切り替え時に古い建物が残らないよう全削除
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
@@ -50,8 +50,8 @@ public class GhostHakaGenerator : MonoBehaviour
             Vector3 spawnPos = new Vector3(_spawnX, randomY, _spawnZ); //_spawnZを指定
 
             // 生成
-            GameObject newHaka = Instantiate(_hakaPrefab, spawnPos, Quaternion.identity);
-            newHaka.transform.SetParent(this.transform);
+            GameObject newBuilding = Instantiate(_buildingPrefab, spawnPos, Quaternion.identity);
+            newBuilding.transform.SetParent(this.transform);
 
             // 次の出現までの時間を計算
             // 「最低限の間隔」＋「0〜ランダム最大時間」

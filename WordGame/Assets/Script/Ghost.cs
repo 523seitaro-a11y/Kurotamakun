@@ -11,6 +11,12 @@ public class Ghost : MonoBehaviour
     [SerializeField, Header("回転時間")]
     private float _rotationDuration = 0.1f;
 
+    [SerializeField, Header("木")] 
+    private GameObject _tree;
+
+    [SerializeField, Header("杉")] 
+    private GameObject _sugi;
+
     private Vector3 _startPos;
     private Vector3 _startScale;
 
@@ -28,11 +34,15 @@ public class Ghost : MonoBehaviour
     void OnEnable()//Activeになる度に開始される処理
     {
         StartCoroutine(RotateAppear());
+        _tree.SetActive(false);
+        _sugi.SetActive(true);
     }
 
     void OnDisable()//非Activeになった瞬間に開始される処理（変数のリセット用）
     {
-        
+        _tree.SetActive(true);
+        _sugi.SetActive(false);
+
     }
 
     IEnumerator RotateAppear()//回転アニメーション

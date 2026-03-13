@@ -82,6 +82,10 @@ public class FlagManager : MonoBehaviour
     public bool crime;//罪
     public bool small;//小
 
+    [SerializeField, Header("太陽")] 
+    private GameObject _sun;
+
+
     void Start()
     {
         // Renderer Featureの中から名前が "NightModeFeature" のものを探す
@@ -135,6 +139,11 @@ public class FlagManager : MonoBehaviour
         {
             // night変数の true/false をそのままシェーダーのON/OFFに適用
             _nightModeFeature.SetActive(night);
+            // 太陽の表示も切り替える
+            if (_sun != null)
+            {
+                _sun.SetActive(!night); // 夜のときは太陽を消す
+            }
         }
         // --------------------------
 

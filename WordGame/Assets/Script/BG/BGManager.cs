@@ -36,15 +36,6 @@ public class BGManager : MonoBehaviour
     [SerializeField,Header("穴の速度")]
     private float _speed = 4f;
 
-    [SerializeField, Header("木（Tree）の親オブジェクト")]
-    private GameObject _treeObject;
-
-    [SerializeField, Header("竹（Tikurin）の親オブジェクト")]
-    private GameObject _tikurinObject;
-
-    [SerializeField, Header("杉（Sugi）の親オブジェクト")]
-    private GameObject _sugiObject;
-
     [SerializeField, Header("風船のプレハブ")]
     private GameObject _balloonPrefab;
     [SerializeField, Header("風船を出す間隔")]
@@ -129,33 +120,6 @@ public class BGManager : MonoBehaviour
     {
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
-
-        // Keyboard.current.kKey.isPressed は Kキーが押されている間 true になります
-        bool isKPressed = Keyboard.current.kKey.isPressed;
-
-
-        if (_treeObject != null)
-        {
-            _treeObject.SetActive(!isKPressed); // Kを押していない時にアクティブ
-        }
-
-        if (_tikurinObject != null)
-        {
-            _tikurinObject.SetActive(isKPressed);  // Kを押している時にアクティブ
-        }
-
-        // --- 追加：Gキー：杉の表示制御 ---
-        bool isGPressed = Keyboard.current.gKey.isPressed;
-        if (_treeObject != null)
-        {
-            _treeObject.SetActive(!isGPressed); // Gを押していない時にアクティブ
-        }
-
-        if (_sugiObject != null)
-        {
-            // Gが押されている時に「杉」を表示
-            _sugiObject.SetActive(isGPressed);
-        }
 
         // --- 追加：Yキー：月の表示制御 ---
         bool isYPressed = keyboard.yKey.isPressed;
