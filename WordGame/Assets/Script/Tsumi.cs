@@ -15,8 +15,8 @@ public class Tsumi : MonoBehaviour
     [SerializeField, Header("婆")]
     private GameObject _baa;
 
-    [SerializeField, Header("悪人")]
-    private GameObject _akunin;
+    [SerializeField, Header("火")]
+    private GameObject _fire;
 
     [SerializeField, Header("女の子")]
     private GameObject _girl;
@@ -30,12 +30,14 @@ public class Tsumi : MonoBehaviour
 
     void OnEnable()
     {
+        _fire.SetActive(false);
         TsumiCount = 0;
         _currentIndex = 0;
 
         _kurotama.SetActive(true);
 
         _baa.SetActive(false);
+        _fire.SetActive(false);
         _girl.SetActive(false);
         _car.SetActive(false);
 
@@ -117,7 +119,7 @@ public class Tsumi : MonoBehaviour
         _girl.SetActive(true);
         _kurotama.SetActive(false);
 
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(6f);
 
         _girl.SetActive(false);
         _kurotama.SetActive(true);
@@ -135,7 +137,7 @@ public class Tsumi : MonoBehaviour
         yield return new WaitForSeconds(8f);
 
         _car.SetActive(false);
-        _kurotama.SetActive(false);
+        _kurotama.SetActive(true);
 
         TsumiCount++;
     }
@@ -144,6 +146,7 @@ public class Tsumi : MonoBehaviour
     {
         Debug.Log("イベントD");
 
+        _fire.SetActive(true);
         yield return new WaitForSeconds(4.6f);
 
         TsumiCount++;
