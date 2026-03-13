@@ -3,13 +3,6 @@ using System.Collections;
 
 public class Ghost : MonoBehaviour
 {
-    [SerializeField, Header("瞬きオブジェクト")]
-    private GameObject _blinkObject;
-    [SerializeField, Header("瞬きの間隔")]
-    private float _blinkInterval = 5.0f;
-    [SerializeField, Header("瞬きの長さ")]
-    private float _blinkLength = 0.2f;
-
     [SerializeField, Header("上下の幅")]
     private float _amplitude = 0.2f;
     [SerializeField, Header("揺れる速さ")]
@@ -35,14 +28,12 @@ public class Ghost : MonoBehaviour
     void OnEnable()//Activeになる度に開始される処理
     {
         StartCoroutine(RotateAppear());
-        StartCoroutine(Blink());
     }
 
     void OnDisable()//非Activeになった瞬間に開始される処理（変数のリセット用）
     {
         
     }
-
 
     IEnumerator RotateAppear()//回転アニメーション
     {
@@ -61,17 +52,6 @@ public class Ghost : MonoBehaviour
             transform.localScale = new Vector3(xScale, startScale.y, startScale.z);
 
             yield return null;
-        }
-    }
-
-    IEnumerator Blink()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(_blinkInterval);
-            _blinkObject.SetActive(true);
-            yield return new WaitForSeconds(_blinkLength);
-            _blinkObject.SetActive(false);
         }
     }
 
