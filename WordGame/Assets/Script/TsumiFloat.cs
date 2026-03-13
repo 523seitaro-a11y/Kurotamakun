@@ -23,6 +23,9 @@ public class TsumiFloat : MonoBehaviour
     [SerializeField, Header("落下時間")]
     private float _moveDuration = 0.5f;
 
+    [SerializeField, Header("Zのずれ")]
+    private float _zStep = 0.1f;
+
     private Vector3 _startLocalPos;
     private Tsumi parent;
 
@@ -110,13 +113,16 @@ public class TsumiFloat : MonoBehaviour
 
         GameObject obj = Instantiate(prefab, transform);
 
-        Vector3 targetPos = new Vector3(0f, index * _stackY + _startY, .5f);
+        float z = 0.5f - index * _zStep;  // ← 上ほど小さくする
+
+        Vector3 targetPos = new Vector3(0f, index * _stackY + _startY, z);
         obj.transform.localRotation = Quaternion.identity;
 
         if (fallFromTop)
         {
-            Vector3 startPos = new Vector3(0f, _spawnStartY, .5f);
+            Vector3 startPos = new Vector3(0f, _spawnStartY, z);
             obj.transform.localPosition = startPos;
+
             StartCoroutine(MoveToPosition(obj.transform, startPos, targetPos, _moveDuration));
         }
         else

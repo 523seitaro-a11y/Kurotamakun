@@ -27,48 +27,31 @@ public class Toku : MonoBehaviour
 
     public int TokuCount = 0;
 
-    private List<int> _events;
     private int _currentIndex;
-    private float _timer;
 
-    void Awake()//Activeになった瞬間に一度だけ開始される処理
+    void Awake()
     {
-
     }
 
-    void OnEnable()//Activeになる度に開始される処理
+    void OnEnable()
     {
-        _kurotama.SetActive(true);
-
-        ResetEvents();
-
         TokuCount = 0;
+
+        _kurotama.SetActive(true);
+        
+        _currentIndex = 0;
 
         _baa.SetActive(false);
         _akunin.SetActive(false);
         _girl.SetActive(false);
+        _car.SetActive(false);
 
-        NextEvent();
-
-        _timer = 0f;
+        StartCoroutine(EventSequence());
     }
 
-void Update()//Activeになっている間に繰り返される処理
+    void Update()
     {
-        if (_events == null || _currentIndex >= _events.Count)
-        {
-            return;
-        }
-
-        _timer += Time.deltaTime;
-
-        if (_timer >= _interval)
-        {
-            _timer = 0f;
-            NextEvent();
-        }
-
-        if (_baa.activeSelf)//要改善
+        if (_baa.activeSelf)
         {
             TokuMoveSpeed = _baa.GetComponent<Baa>().Speed;
         }
@@ -86,51 +69,42 @@ void Update()//Activeになっている間に繰り返される処理
         }
     }
 
-    void OnDisable()//非Activeになった瞬間に開始される処理（コルーチンの停止用）
+    void OnDisable()
     {
         StopAllCoroutines();
+
         TokuMoveSpeed = 1f;
     }
 
-    void ResetEvents()
+    IEnumerator EventSequence()
     {
-        _events = new List<int>() { 0, 1, 2, 3};
-        _currentIndex = 0;
-        _timer = 0f;
-
-        Shuffle(_events);
-    }
-
-
-    public void NextEvent()
-    {
-        if (_currentIndex >= _events.Count)
+        while (_currentIndex < 4)
         {
-            Debug.Log("すべてのイベント終了");
-            return;
+            yield return new WaitForSeconds(_interval);
+
+            switch (_currentIndex)
+            {
+                case 0:
+                    yield return StartCoroutine(EventA());
+                    break;
+
+                case 1:
+                    yield return StartCoroutine(EventB());
+                    break;
+
+                case 2:
+                    yield return StartCoroutine(EventC());
+                    break;
+
+                case 3:
+                    yield return StartCoroutine(EventD());
+                    break;
+            }
+
+            _currentIndex++;
         }
 
-        int eventID = _events[_currentIndex];
-        _currentIndex++;
-
-        switch (eventID)
-        {
-            case 0:
-                StartCoroutine(EventA());
-                break;
-
-            case 1:
-                StartCoroutine(EventB());
-                break;
-
-            case 2:
-                StartCoroutine(EventC());
-                break;
-
-            case 3:
-                StartCoroutine(EventD());
-                break;
-        }
+        Debug.Log("すべてのイベント終了");
     }
 
     IEnumerator EventA()
@@ -138,8 +112,7 @@ void Update()//Activeになっている間に繰り返される処理
         Debug.Log("イベントA");
 
         _baa.SetActive(true);
-        WaitForSeconds wait = new WaitForSeconds(6.0f);
-        yield return wait;
+        yield return new WaitForSeconds(6.0f);
         _baa.SetActive(false);
 
         TokuCount++;
@@ -150,8 +123,7 @@ void Update()//Activeになっている間に繰り返される処理
         Debug.Log("イベントB");
 
         _akunin.SetActive(true);
-        WaitForSeconds wait = new WaitForSeconds(4.6f);
-        yield return wait;
+        yield return new WaitForSeconds(4.6f);
         _akunin.SetActive(false);
 
         TokuCount++;
@@ -163,8 +135,7 @@ void Update()//Activeになっている間に繰り返される処理
 
         _girl.SetActive(true);
         _kurotama.SetActive(false);
-        WaitForSeconds wait = new WaitForSeconds(6f);
-        yield return wait;
+        yield return new WaitForSeconds(6f);
         _girl.SetActive(false);
         _kurotama.SetActive(true);
 
@@ -176,22 +147,11 @@ void Update()//Activeになっている間に繰り返される処理
         Debug.Log("イベントD");
 
         _car.SetActive(true);
-         _kurotama.SetActive(false);
+        _kurotama.SetActive(false);
         yield return new WaitForSeconds(8f);
         _car.SetActive(false);
         _kurotama.SetActive(true);
 
         TokuCount++;
-    }
-
-    void Shuffle(List<int> list)
-    {
-        for (int i = 0; i < list.Count; i++)
-        {
-            int rand = Random.Range(i, list.Count);
-            int temp = list[i];
-            list[i] = list[rand];
-            list[rand] = temp;
-        }
     }
 }
