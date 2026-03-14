@@ -85,6 +85,10 @@ public class FlagManager : MonoBehaviour
     [SerializeField, Header("太陽")] 
     private GameObject _sun;
 
+    private bool _prevSoundInput = false;
+    private bool _soundInput = false;
+    private AudioSource audioSource;
+
 
     void Start()
     {
@@ -105,6 +109,7 @@ public class FlagManager : MonoBehaviour
         // 開始時はオフにしておく
         if (_nightModeFeature != null) _nightModeFeature.SetActive(false);
 
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -146,6 +151,14 @@ public class FlagManager : MonoBehaviour
             }
         }
         // --------------------------
+
+        _soundInput = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm || small || crime || pause || mirror || night;
+
+        if (!_prevSoundInput && _soundInput)
+        {
+            audioSource.Play();
+        }
+        _prevSoundInput = _soundInput;
 
         inputWord = horror || ko || ghost || rocket || bone || rocket || leg || fish || wing || under || destroy || toku || neko || zu || arm || small || crime;
 
