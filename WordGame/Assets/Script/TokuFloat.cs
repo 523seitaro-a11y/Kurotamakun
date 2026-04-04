@@ -43,7 +43,7 @@ public class TokuFloat : MonoBehaviour
     {
         ClearChildren();
 
-        if (parent != null)
+        if (parent != null && parent.TokuCount > 0)
         {
             _prevTokuCount = 0;
 
@@ -155,6 +155,7 @@ public class TokuFloat : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
+            child.gameObject.SetActive(false);
             Destroy(child.gameObject);
         }
     }

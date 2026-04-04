@@ -46,7 +46,7 @@ public class TsumiFloat : MonoBehaviour
     {
         ClearChildren();
 
-        if (parent != null)
+        if (parent != null && parent.TsumiCount > 0)
         {
             _prevTsumiCount = 0;
 
@@ -161,6 +161,7 @@ public class TsumiFloat : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
+            child.gameObject.SetActive(false);
             Destroy(child.gameObject);
         }
     }

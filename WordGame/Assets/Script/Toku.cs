@@ -74,6 +74,11 @@ public class Toku : MonoBehaviour
         StopAllCoroutines();
 
         TokuMoveSpeed = 1f;
+
+        _baa.SetActive(false);
+        _akunin.SetActive(false);
+        _girl.SetActive(false);
+        _car.SetActive(false);
     }
 
     IEnumerator EventSequence()

@@ -68,6 +68,11 @@ public class Tsumi : MonoBehaviour
     {
         StopAllCoroutines();
         TsumiMoveSpeed = 1f;
+
+        _baa.SetActive(false);
+        _fire.SetActive(false);
+        _girl.SetActive(false);
+        _car.SetActive(false);
     }
 
     IEnumerator EventSequence()
