@@ -64,6 +64,11 @@ public class TsumiFloat : MonoBehaviour
         }
     }
 
+    void OnDisable()
+    {
+        ClearChildren();
+    }
+
     void Update()
     {
         if (parent == null) return;

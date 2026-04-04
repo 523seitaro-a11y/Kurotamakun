@@ -61,6 +61,11 @@ public class TokuFloat : MonoBehaviour
         }
     }
 
+    void OnDisable()
+    {
+        ClearChildren();
+    }
+
     void Update()
     {
         if (parent == null) return;
